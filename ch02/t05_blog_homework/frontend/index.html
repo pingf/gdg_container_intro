@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Blog Demo</title>
+  <script src="vue.min.js"></script>
+  <script src="axios.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      new Vue({
+        el: '#content',
+        data: {
+          posts: [
+            
+            ]
+        },
+        methods: {
+            fetchPosts:    function (event) {
+                axios.post('http://0.0.0.0:9090/v1.0/posts', {
+                })
+                .then(
+                    response => {
+                    console.log(this.posts)
+                    this.posts = response.data
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+
+            }   
+        },
+        mounted(){
+            this.fetchPosts()
+        }
+      })
+    })
+  </script>
+</head>
+<body>
+  <!-- text -->
+  <div id="content">
+    <ul>
+    <li v-for="item in posts" :id="item.key">
+        {{ item.title }} - {{ item.author }} 
+        <br />
+        {{ item.content }}
+    </li>
+    </ul>
+  </div>
+</body>
+</html>
